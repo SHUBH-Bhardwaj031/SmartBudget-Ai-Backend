@@ -1,7 +1,7 @@
 // config/gemini.js
 import axios from "axios";
 
-const GEMINI_API_KEY = "AIzaSyBEeS__0MgO5EvGe8tBc3TGjWaVHT8FFpY";
+const GEMINI_API_KEY = GEMINI_API_KEYS;
 
 const geminiClient = {
   generate: async (userMessage, systemPrompt = "") => {

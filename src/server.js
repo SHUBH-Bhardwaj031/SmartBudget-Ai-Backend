@@ -9,31 +9,35 @@ import connectDb from "./config/db.js";
 import cors from "cors";
 import dotenv from "dotenv";
 
-
-dotenv.config({ path: "../.env" });
+// ✅ load .env from root automatically
+dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "smart-budget-ai-backend.vercel.app" }));
 app.use(express.json());
 
-
+// Public routes
 app.use("/api", authRouter);
-app.use(authMiddleware); // protect all routes after this
 
+// Protected routes
+app.use(authMiddleware); // protect all routes after this
 app.use("/api", expenseRouter);
 app.use("/api", userRouter);
 app.use("/api", aiRouter);
 
-
-
+// Error handling
 app.use(notFount);
 app.use(errorHandler);
 
-app.get("/", (req, resp) => {
-  resp.json({ message: "Welcome to expense backend." });
+// Test route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to expense backend." });
 });
 
+// Connect DB
 connectDb();
 
-app.listen(8081, () => console.log("Server started on port 8081"));
+// Use environment PORT if available
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
