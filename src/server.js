@@ -9,8 +9,14 @@ import connectDb from "./config/db.js";
 import cors from "cors";
 import dotenv from "dotenv";
 
+
 // ✅ load .env from root automatically
 dotenv.config();
+
+// Use environment PORT if available
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
 
 const app = express();
 
@@ -38,6 +44,3 @@ app.get("/", (req, res) => {
 // Connect DB
 connectDb();
 
-// Use environment PORT if available
-const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
